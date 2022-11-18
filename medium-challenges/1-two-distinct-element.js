@@ -9,20 +9,32 @@
 // returnUnique([9, 5, 6, 8, 7, 7, 1, 1, 1, 1, 1, 9, 8]) ➞ [5, 6]
 // Notes
 // Keep the same ordering in the output.
-let returnUnique = (array) => {
-        let arrayCopy = array.map(element => [element, false]);
-        console.log(arrayCopy)
-        let unique = [];
-        for(let i = 0; i<array.length;i++){
-            arrayCopy[i][1] = true
-            console.log(arrayCopy[i],arrayCopy.includes([array[i], false]))
-            if(arrayCopy.includes([array[i], false])){
-                console.log(array[i] + false)
-                arrayCopy = arrayCopy.filter(x => x[0] === array[i])
-            } else{
-            }
-        }
-        return arrayCopy
 
+let array = [9, 5, 6, 8, 7, 7, 1, 1, 1, 1, 1, 9, 8];
+const returnUnique = (array,classifier) => {
+    let repeat = classifier(array);
+    return repeat.filter(x => x.length === 1).map(x => x[0])
+    // Sample input : [[34,31],[3,asd],[asd],[57]] sample outPut => [asd]
 }
-console.log(returnUnique([5, 5, 2, 4, 4, 4, 9, 9, 9, 1]))
+
+const classifier = (array) =>{
+    let repeats = []
+    for (i= 0; i < array.length; i++){
+        let repeat = [array[i]]
+        for(j= 0; j < array.length; j++){
+            if (array[j] === array[i]&& i !== j){
+                array[j] = 'x'
+                repeat.push(array[i])
+
+            } 
+            // console.log(repeat)
+
+        }
+
+        repeats.push(repeat)
+        // console.log(repeats.filter(x => x[0] !== 'x'))
+
+    }
+    return repeats.filter(x => x[0] !== 'x');
+}
+console.log(returnUnique(array,classifier))
