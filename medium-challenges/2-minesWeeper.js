@@ -56,19 +56,19 @@ const mineSweeper = (table) => {
     let newTable = [...table];
     for(let row= 0; row<table.length; row++){
         for(let col = 0; col<table[row].length; col++){
-            console.log(table[row][col])
+            // console.log(table[row][col])
             const cell = checkMine(row,col,table)
             newTable[row][col] = cell
         }
     }
-    return result
+    return newTable
 }
 // diagonal x-1 [n - 1,n+1] x+1[n-1,n+1]  x[n-1 n+1]
 
 const checkMine = (row,col,table) => {
-    console.log(table[row][col])
+    // console.log(table[row][col])
     result = 0
-    // let mines = [y= '', yPrime = '', z = '', zPrime = '', x = '', xPrime = ''];
+    let [y, yPrime, z, zPrime, x, xPrime] = ['', '', '', '', '', ''];
     if(table[row][col] === '#'){
         return "#"
     }
@@ -97,8 +97,9 @@ const checkMine = (row,col,table) => {
     // x and x prim
     col - 1 >= 0 ? x = table[row][col-1] : x = "-"
     col + 1 < table[row].length ? xPrime = table[row][col+1] : xPrime = "-"
-    // mines.map(element => element === "#" ? result++ : result+=0)
-    console.log(table)
+    let mines = [y, yPrime, z, zPrime, x, xPrime]
+    mines.map(element => element === "#" ? result++ : result+=0)
+    // console.log(result)
     return result
     // if (row + 1 >= 0){
     //     yPrim = table[row+1][col]
@@ -113,11 +114,11 @@ const checkMine = (row,col,table) => {
 }
 console.log(mineSweeper(
     [
-  ["-", "-", "-", "-", "#"],
-  ["-", "-", "-", "-", "-"],
+  ["-", "-", "-", "#", "#"],
+  ["-", "#", "-", "-", "-"],
   ["-", "-", "#", "-", "-"],
-  ["-", "-", "-", "-", "-"],
-  ["#", "-", "-", "-", "-"]
+  ["-", "#", "#", "-", "-"],
+  ["-", "-", "-", "-", "-"]
 ]
 ))
 //check mine returns number
