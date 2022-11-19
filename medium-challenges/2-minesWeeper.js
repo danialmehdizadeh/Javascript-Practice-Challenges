@@ -52,28 +52,72 @@
 // Notes
 // N/A
 const mineSweeper = (table) => {
-    let [newTable,row,col] = [[...table],0,0];
-    while(row<table.length){
-        while(col<table[row].length){
-            console.log(table[row].length)
-            const cell = checkMine(row,col)
+
+    let newTable = [...table];
+    for(let row= 0; row<table.length; row++){
+        for(let col = 0; col<table[row].length; col++){
+            console.log(table[row][col])
+            const cell = checkMine(row,col,table)
             newTable[row][col] = cell
-            col++
         }
-        row++;
     }
-    return newTable
+    return result
 }
-const checkMine = () => {
-    return 1
+// diagonal x-1 [n - 1,n+1] x+1[n-1,n+1]  x[n-1 n+1]
+
+const checkMine = (row,col,table) => {
+    console.log(table[row][col])
+    result = 0
+    // let mines = [y= '', yPrime = '', z = '', zPrime = '', x = '', xPrime = ''];
+    if(table[row][col] === '#'){
+        return "#"
+    }
+    // y zprime z
+    if (row - 1 >= 0){
+        y = table[row-1][col]
+        if (col - 1 >= 0){
+            zPrime = table[row-1][col-1]
+        }
+        if (col <= table[row-1].length - 1){
+            z = table[row-1][col+1]
+        }
+    }
+    // yprim hprime h
+    if (row + 1 < table.length){
+        yPrime = table[row+1][col]
+        // console.log(y,"it is yPrime",table)
+
+        if (col + 1 >= 0){
+            zPrime = table[row+1][col-1]
+        }
+        if (col < table[row+1].length){
+            z = table[row+1][col+1]
+        }
+    }
+    // x and x prim
+    col - 1 >= 0 ? x = table[row][col-1] : x = "-"
+    col + 1 < table[row].length ? xPrime = table[row][col+1] : xPrime = "-"
+    // mines.map(element => element === "#" ? result++ : result+=0)
+    console.log(table)
+    return result
+    // if (row + 1 >= 0){
+    //     yPrim = table[row+1][col]
+    // }
+    // if (row - 1 >= 0){
+    //     y = table[row-1][col]
+    // }
+    // if (row + 1 >= 0){
+    //     yPrim = table[row+1][col]
+    // }
+    // if(table[x-1][n - 1],table[x-1][n + 1], table[x+1], table[x+1],table[x],table[x])
 }
-mineSweeper(
+console.log(mineSweeper(
     [
-          ["1", "1", "2", "#", "#"],
-          ["1", "#", "3", "3", "2"],
-          ["2", "4", "#", "2", "0"],
-          ["1", "#", "#", "2", "0"],
-          ["1", "2", "2", "1", "0"],
-        ]
-)
+  ["-", "-", "-", "-", "#"],
+  ["-", "-", "-", "-", "-"],
+  ["-", "-", "#", "-", "-"],
+  ["-", "-", "-", "-", "-"],
+  ["#", "-", "-", "-", "-"]
+]
+))
 //check mine returns number
